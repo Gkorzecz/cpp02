@@ -27,6 +27,7 @@ Fixed &Fixed::operator=(const Fixed &other)
 
 void Fixed::setRawBits(int const raw)
 {
+    std::cout << "Fixed class raw value set to : " << raw << "\n";
     this->value_ = raw;
 }
 
