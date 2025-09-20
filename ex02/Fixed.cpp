@@ -161,3 +161,10 @@ const Fixed& Fixed::max(const Fixed& a, const Fixed& b)
     else
         return (b);
 }
+
+Fixed Fixed::fromRaw(int raw)
+{
+    Fixed tmp;
+    tmp._value = raw;
+    return (tmp);
+}

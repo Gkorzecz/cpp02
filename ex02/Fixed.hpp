@@ -13,6 +13,7 @@ class Fixed
         Fixed();
         Fixed(const int value);
         Fixed(const float value);
+        Fixed fromRaw(int raw);
         Fixed(const Fixed &other);
         ~Fixed();
 
