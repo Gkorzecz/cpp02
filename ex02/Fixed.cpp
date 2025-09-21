@@ -84,24 +84,56 @@ bool Fixed::operator!=(const Fixed &other) const
     return (this->_value != other._value);
 }
 
+// Fixed Fixed::operator+(const Fixed& other) const
+// {
+//     return (Fixed(this->toFloat() + other.toFloat()));
+// }
+
+// Fixed Fixed::operator-(const Fixed& other) const
+// {
+//     return (Fixed(this->toFloat() - other.toFloat()));
+// }
+
+// Fixed Fixed::operator*(const Fixed& other) const
+// {
+//     return (Fixed(this->toFloat() * other.toFloat()));
+// }
+
+// Fixed Fixed::operator/(const Fixed& other) const
+// {
+//     return (Fixed(this->toFloat() / other.toFloat()));
+// }
+
 Fixed Fixed::operator+(const Fixed& other) const
 {
-    return (Fixed(this->toFloat() + other.toFloat()));
+    Fixed Fix_Add;
+    Fix_Add._value = this->_value + other._value;
+    return (Fix_Add);
 }
 
 Fixed Fixed::operator-(const Fixed& other) const
 {
-    return (Fixed(this->toFloat() - other.toFloat()));
+    Fixed Fix_Sub;
+    Fix_Sub._value = this->_value - other._value;
+    return (Fix_Sub);
 }
 
 Fixed Fixed::operator*(const Fixed& other) const
 {
-    return (Fixed(this->toFloat() * other.toFloat()));
+    int64_t wide = static_cast<int64_t>(_value) * other._value;
+    Fixed Fix_Mul;
+    Fix_Mul._value = static_cast<int>(wide >> _fract_bits);
+    return (Fix_Mul);
 }
 
 Fixed Fixed::operator/(const Fixed& other) const
 {
-    return (Fixed(this->toFloat() / other.toFloat()));
+    if (other._value == 0)
+        throw std::runtime_error("division by zero");
+    int64_t wide = (static_cast<int64_t>(_value) << _fract_bits);
+    Fixed Fix_Div;
+    Fix_Div._value = static_cast<int>(wide / other._value);
+    return (Fix_Div);
 }
 
 Fixed& Fixed::operator++()
@@ -160,11 +192,4 @@ const Fixed& Fixed::max(const Fixed& a, const Fixed& b)
         return (a);
     else
         return (b);
-}
-
-Fixed Fixed::fromRaw(int raw)
-{
-    Fixed tmp;
-    tmp._value = raw;
-    return (tmp);
 }
